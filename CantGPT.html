@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CantGPT</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #333;
+      color: #fff;
+    }
+    .header-contents {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #444;
+      border-bottom: 2px solid #555;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 1000;
+    }
+    .header-chatname {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header-chatname button {
+      background-color: #555;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    .header-chatname button:hover {
+      background-color: #666;
+    }
+    .header-chatname p {
+      margin: 0;
+      font-weight: bold;
+    }
+    .ai-chat-bubble {
+      background-color: #444;
+      color: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 80%;
+      margin: 10px auto;
+      position: relative;
+    }
+    .footer-message-box input {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #444;
+      border-top: 2px solid #555;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 1000;
+      text-align: center;
+      width: 100%;
+      border-radius: 5px;
+      margin: 0 auto;
+      color: #fff;
+      border: 1px solid #555;
+      background-color: #333;
+      padding: 10px;
+      border-radius: 5px;
+      width: 80%;
+      margin: 0 auto;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    .send-button {
+      background-color: #555;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      border: 1px solid #444;
+      background-color: #333;
+      padding: 10px;
+      border-radius: 5px;
+      width: 80%;
+      margin: 0 auto;
+      font-size: 16px;
+      text-align: center;
+      display: inline-block;
+      text-decoration: none;
+      color: #fff;
+      border: none;
+      width: 25%;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="header-contents">
+      <h2><strong>CantGPT</strong></h2>
+      <div class="header-chatname" id="header-chatname">
+        <p>New Chat</p>
+        <button onclick="renameChat();">✎</button>
+      </div>
+
+      <script>
+        function renameChat() {
+          const chatName = prompt("Enter new chat name:");
+
+          if(chatName) {
+            document.querySelector("#header-chatname p").textContent = chatName;
+          } else {
+            alert("Chat name can't be empty.");
+          }
+        }
+      </script>
+    </div>
+  </header>
+
+  <main>
+    <div class="body-contents">
+      <div class="ai-chat-bubble">
+        <p>Hi, I'm CantGPT! I really can't do anything. How can I not help?</p>
+      </div>
+      <div id="response-status">
+        <p>Waiting for your response...</p>
+
+        <script>
+          const responseStatus = document.getElementById("response-status");
+          
+          function updateStatus() {
+            setTimeout(() => {
+              resposeStatus.textContent = "CantGPT is thinking...";
+            }, 0);
+
+            setTimeout(() => {
+              responseStatus.textContent = "Still thinking...";
+            }, 2000);
+
+            setTimeout(() => {
+              responseStatus.textContent = "Gave up.";
+            }, 4000);
+
+            setTimeout(() => {
+              responseStatus.textContent = "Waiting for your response...";
+            }, 2000);
+          }
+        </script>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-contents">
+      <div class="footer-message-box">
+        <input type="text" id="message-input" placeholder="Type your message here..." />
+        <button id="send-button" onclick="updateStatus(); timeoutAbsolute();">Send</button>
+
+        <script>
+          document.getElementById("send-button").addEventListener("click", function() {
+            const messageInput = document.getElementById("message-input");
+            const message = messageInput.value;
+
+            if (message) {
+              const chatBubble = document.createElement("div");
+              chatBubble.className = "ai-chat-bubble";
+              chatBubble.textContent = message;
+              document.querySelector(".body-contents").appendChild(chatBubble);
+              messageInput.value = "";
+            } else {
+              alert("Message can't be empty.");
+            }
+          });
+        </script>
+
+        <script>
+          const sendButton = document.getElementById("send-button");
+
+          function timeoutAbsolute() {
+            alert("Whoa there! You already sent a message.\nCantGPT needs 24 hours to recover from that.");
+            sendButton.style.display = "none";
+
+            setTimeout(() => {
+              sendButton.style.display = "block";
+            }, 86400000); // 24 hours in milliseconds
+            
+            return;
+          }
+        </script>
+      </div>
+    </div>
+  </footer>
+</body>
+
+<script>
+  if (Math.random() < 0.3) {
+    chatBubble.textContent = "Error: CantGPT encountered a motivation failure. Please try again never.";
+  }
+</script>
+</html>
