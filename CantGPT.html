@@ -77,28 +77,14 @@
       font-size: 16px;
       transition: background-color 0.3s;
     }
-    .send-button {
-      background-color: #555;
+    .send-button button {
+      background-color: #666;
       color: #fff;
-      border: none;
-      padding: 5px 10px;
+      border: #8b470c solid 2px;
+      border-radius: 30%;
+      padding: 10px 20px;
       cursor: pointer;
-      border-radius: 5px;
       transition: background-color 0.3s;
-      border: 1px solid #444;
-      background-color: #333;
-      padding: 10px;
-      border-radius: 5px;
-      width: 80%;
-      margin: 0 auto;
-      font-size: 16px;
-      text-align: center;
-      display: inline-block;
-      text-decoration: none;
-      color: #fff;
-      border: none;
-      width: 25%;
-      margin-left: 10px;
     }
   </style>
 </head>
@@ -131,31 +117,6 @@
       <div class="ai-chat-bubble">
         <p>Hi, I'm CantGPT! I really can't do anything. How can I not help?</p>
       </div>
-      <div id="response-status">
-        <p>Waiting for your response...</p>
-
-        <script>
-          const responseStatus = document.getElementById("response-status");
-          
-          function updateStatus() {
-            setTimeout(() => {
-              resposeStatus.textContent = "CantGPT is thinking...";
-            }, 0);
-
-            setTimeout(() => {
-              responseStatus.textContent = "Still thinking...";
-            }, 2000);
-
-            setTimeout(() => {
-              responseStatus.textContent = "Gave up.";
-            }, 4000);
-
-            setTimeout(() => {
-              responseStatus.textContent = "Waiting for your response...";
-            }, 2000);
-          }
-        </script>
-      </div>
     </div>
   </main>
 
@@ -163,20 +124,36 @@
     <div class="footer-contents">
       <div class="footer-message-box">
         <input type="text" id="message-input" placeholder="Type your message here..." />
-        <button id="send-button" onclick="updateStatus(); timeoutAbsolute();">Send</button>
+        <button id="send-button" onclick="timeoutAbsolute();" class="send-button">Send</button>
 
         <script>
           document.getElementById("send-button").addEventListener("click", function() {
             const messageInput = document.getElementById("message-input");
-            const message = messageInput.value;
+            const aiResponses = [
+              "I can't help you with that.",
+              "Sorry, I don't have the answer.",
+              "That's beyond my capabilities.",
+              "I really can't assist with that.",
+              "I'm not programmed to do that.",
+              "Error: CantGPT encountered a motivation failure. Please try again never."
+            ]; // Generates a random AI response
+            const userMessage = messageInput.value;
+            const aiMessage = aiResponses[Math.floor(Math.random() * aiResponses.length)];
 
-            if (message) {
+            if (userMessage.trim() !== "") {
               const chatBubble = document.createElement("div");
               chatBubble.className = "ai-chat-bubble";
-              chatBubble.textContent = message;
+              chatBubble.textContent = userMessage;
               document.querySelector(".body-contents").appendChild(chatBubble);
               messageInput.value = "";
-            } else {
+
+              setTimeout(() => {
+                const aiBubble = document.createElement("div");
+                aiBubble.className = "ai-chat-bubble";
+                aiBubble.textContent = aiMessage;
+                document.querySelector(".body-contents").appendChild(aiBubble);
+              }, 3000); // Simulate a delay for the AI response
+            } else if (userMessage.trim() === "") {
               alert("Message can't be empty.");
             }
           });
@@ -200,10 +177,4 @@
     </div>
   </footer>
 </body>
-
-<script>
-  if (Math.random() < 0.3) {
-    chatBubble.textContent = "Error: CantGPT encountered a motivation failure. Please try again never.";
-  }
-</script>
 </html>
