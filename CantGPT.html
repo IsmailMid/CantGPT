@@ -86,6 +86,22 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
+    .user-chat-bubble {
+      background-color: #1b2d59;
+      color: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 80%;
+      margin: 10px auto;
+      position: relative;
+    }
+    .fade {
+      transition: opacity 0.4s ease;
+      opacity: 1;
+    }
+    .fade-out {
+      opacity: 0;
+    }
   </style>
 </head>
 
@@ -100,14 +116,32 @@
 
       <script>
         function renameChat() {
-          const chatName = prompt("Enter new chat name:");
+          const chatNames = [
+            "Epic Fail Chat", 
+            "Chill Vibes", 
+            "Talk to the Wall", 
+            "Motivation Zero", 
+            "CantGPT Lounge",
+            "404 Brain Not Found",
+            "Existential Crisis Club",
+            "Certified Unhelpfulness™",
+            "Cant even Chat",
+            "This is Fine 🔥"
+          ];
 
-          if(chatName) {
-            document.querySelector("#header-chatname p").textContent = chatName;
-          } else {
-            alert("Chat name can't be empty.");
-          }
+          const chatNameElement = document.querySelector("#header-chatname p");
+
+          // Trigger fade-out
+          chatNameElement.classList.add("fade-out");
+
+          // After fade-out, change text and fade back in
+          setTimeout(() => {
+            const randomName = chatNames[Math.floor(Math.random() * chatNames.length)];
+            chatNameElement.textContent = randomName;
+            chatNameElement.classList.remove("fade-out");
+          }, 400); // Match the transition duration in CSS
         }
+
       </script>
     </div>
   </header>
@@ -117,7 +151,6 @@
       <div class="ai-chat-bubble">
         <p>Hi, I'm CantGPT! I really can't do anything. How can I not help?</p>
       </div>
-    </div>
   </main>
 
   <footer>
@@ -135,14 +168,20 @@
               "That's beyond my capabilities.",
               "I really can't assist with that.",
               "I'm not programmed to do that.",
-              "Error: CantGPT encountered a motivation failure. Please try again never."
+              "Error: CantGPT encountered a motivation failure. Please try again never.",
+              "I don't know, comrade.",
+              "Dude, find the answer yourself, 'cause I'm not programmed to do that.",
+              "What is it?",
+              "I can't even.",
+              "I don't know, but I can't help you.",
+              "Why am I even here?"
             ]; // Generates a random AI response
             const userMessage = messageInput.value;
             const aiMessage = aiResponses[Math.floor(Math.random() * aiResponses.length)];
 
             if (userMessage.trim() !== "") {
               const chatBubble = document.createElement("div");
-              chatBubble.className = "ai-chat-bubble";
+              chatBubble.className = "user-chat-bubble";
               chatBubble.textContent = userMessage;
               document.querySelector(".body-contents").appendChild(chatBubble);
               messageInput.value = "";
